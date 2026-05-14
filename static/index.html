@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InCred Finance — Reference Verification Dashboard</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-brand">
+      <h1>InCred Finance</h1>
+      <span class="header-subtitle">WhatsApp Reference Verification Bot</span>
+    </div>
+    <nav>
+      <button class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+      <button class="tab" data-tab="applicants" onclick="switchTab('applicants')">Applicants</button>
+      <button class="tab" data-tab="queue" onclick="switchTab('queue')">Queue</button>
+      <button class="tab" data-tab="simulator" onclick="switchTab('simulator')">WhatsApp Simulator</button>
+      <button class="tab" data-tab="agents" onclick="switchTab('agents')">Agents</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Dashboard Tab -->
+    <section id="tab-dashboard" class="tab-content active">
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="card">
+        <h2>Recent Verifications</h2>
+        <table id="verifications-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Reference</th><th>Type</th><th>Applicant</th>
+              <th>Channel</th><th>Status</th><th>Reason</th><th>Duration</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Applicants Tab -->
+    <section id="tab-applicants" class="tab-content">
+      <div class="card">
+        <h2>Loan Applicants</h2>
+        <table id="applicants-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>City</th><th>Employer</th><th>Loan Amount</th>
+              <th>Status</th><th>References</th><th>Verified</th><th>Positive</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card" id="ref-details-card" style="display:none">
+        <h2 id="ref-details-title">References</h2>
+        <table id="ref-details-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Phone</th><th>Type</th><th>Relationship</th>
+              <th>Status</th><th>Channel</th><th>Reason</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Queue Tab -->
+    <section id="tab-queue" class="tab-content">
+      <div class="card">
+        <h2>Verification Queue <span class="badge" id="queue-count">0</span></h2>
+        <div class="queue-filters">
+          <button class="filter-btn active" onclick="loadQueue('PENDING')">Pending</button>
+          <button class="filter-btn" onclick="loadQueue('ASSIGNED')">Assigned</button>
+          <button class="filter-btn" onclick="loadQueue('IN_PROGRESS')">In Progress</button>
+          <button class="filter-btn" onclick="loadQueue('COMPLETED')">Completed</button>
+          <button class="filter-btn" onclick="loadQueue('FAILED')">Failed</button>
+        </div>
+        <table id="queue-table">
+          <thead>
+            <tr>
+              <th>Priority</th><th>Reference</th><th>Type</th><th>Applicant</th>
+              <th>Channel</th><th>Agent</th><th>Retries</th><th>Scheduled</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- WhatsApp Simulator Tab -->
+    <section id="tab-simulator" class="tab-content">
+      <div class="sim-layout">
+        <div class="sim-panel">
+          <h2>Start Verification</h2>
+          <p>Select a reference to simulate WhatsApp verification:</p>
+          <div id="sample-refs"></div>
+          <div class="sim-input-group">
+            <input type="text" id="sim-phone" placeholder="Or enter phone number (+91...)">
+            <button onclick="startSimulation()" id="sim-start-btn">Start</button>
+          </div>
+        </div>
+        <div class="sim-chat" id="sim-chat">
+          <div class="chat-header">
+            <span class="chat-icon">&#128172;</span>
+            <span id="chat-ref-name">WhatsApp Verification</span>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-empty">Select a reference to start a verification conversation</div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()" disabled>
+            <button onclick="sendMessage()" id="chat-send" disabled>Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agents Tab -->
+    <section id="tab-agents" class="tab-content">
+      <div class="card">
+        <h2>Agent Performance</h2>
+        <table id="agents-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Team</th><th>Daily Target</th>
+              <th>Verifications</th><th>Positive</th><th>Success Rate</th><th>Avg Duration</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

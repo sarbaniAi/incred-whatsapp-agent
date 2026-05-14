@@ -1,0 +1,19 @@
+command:
+  - uvicorn
+  - app:app
+  - --host
+  - 0.0.0.0
+  - --port
+  - "8000"
+
+env:
+  - name: LLM_ENDPOINT
+    value: "databricks-gpt-oss-120b"
+
+resources:
+  - name: incred-telesales-db
+    lakebase:
+      project: whatsapp-bot
+      branch: production
+      database: databricks_postgres
+      permission: READ_WRITE
